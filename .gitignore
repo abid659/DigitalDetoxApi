@@ -1,0 +1,24 @@
+# IDE settings
+.idea/
+.vscode/
+
+# Build outputs
+**/bin/
+**/obj/
+**/publish/
+**/out/
+
+# User files
+*.user
+*.suo
+*.sln.docstates
+
+# Logs
+*.log
+
+# Local configuration
+appsettings.Development.json
+appsettings.Local.json
+
+# Optional: exclude generated HTTP request files
+*.http

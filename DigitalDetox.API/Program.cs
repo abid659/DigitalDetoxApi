@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// === Add DbContext with SQLite ===
+// === Add DbContext with SQLite from appsettings.json ===
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite("Data Source=Detox.db"));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // === Allow CORS for Angular frontend ===
 builder.Services.AddCors(options =>
@@ -34,6 +34,6 @@ app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseAuthorization();
 
-app.MapControllers(); // Enable API routes
+app.MapControllers();
 
 app.Run();

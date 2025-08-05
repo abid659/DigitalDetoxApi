@@ -6,15 +6,16 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["DigitalDetox.API/DigitalDetox.API.csproj", "DigitalDetox.API/"]
-RUN dotnet restore "DigitalDetox.API/DigitalDetox.API.csproj"
-COPY . .
-WORKDIR "/src/DigitalDetox.API"
-RUN dotnet build "./DigitalDetox.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+
+COPY ["DigitalDetox.API.csproj", "./"]
+RUN dotnet restore "DigitalDetox.API.csproj"
+
+COPY . ./
+RUN dotnet build "DigitalDetox.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./DigitalDetox.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "DigitalDetox.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
